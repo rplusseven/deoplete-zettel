@@ -1,10 +1,13 @@
 import os
 import re
+import glob
 
 from .base import Base
 
 class Source(Base):
+
     def __init__(self, vim):
+        Base.__init__(self, vim)
         self.name = 'zettel_files'
         self.mark = '[ZL]'
         self.min_pattern_length = 0
@@ -22,9 +25,9 @@ class Source(Base):
         path = '/home/xa/zettel/'
         # now gather all note files, and return paths relative to the current
         # note's directory.
-        cur_file_dir = dirname(self.vim.buffers[context['bufnr']].name)
+        cur_file_dir = os.path.dirname(self.vim.buffers[context['bufnr']].name)
         for fname in glob.iglob(path + '**/*', recursive=True):
-            fname = relpath(fname, cur_file_dir)
+            fname = os.path.relpath(fname, cur_file_dir)
             if fname.endswith('.md'):
                 fname = fname[:-3]
             contents.append(fname)
