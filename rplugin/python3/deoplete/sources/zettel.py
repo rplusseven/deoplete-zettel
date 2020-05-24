@@ -22,7 +22,8 @@ class Source(Base):
 
     def gather_candidates(self, context):
         contents = []
-        path = '/home/xa/zettel/'
+        home = os.path.expanduser('~')
+        path = home + '/zettel'
         # now gather all note files, and return paths relative to the current
         # note's directory.
         cur_file_dir = os.path.dirname(self.vim.buffers[context['bufnr']].name)
